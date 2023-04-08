@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_25273_admintools.AdminTools_TableInspector</api_name>
+        <caller_access/>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>AdminTools_TableInspector</name>
+        <script><![CDATA[var AdminTools_TableInspector = Class.create();
+AdminTools_TableInspector.prototype = {
+    initialize: function (tableName_string) {
+        this.tableName_string = tableName_string;
+        // Check if table is valid
+        if (!gs.tableExists(tableName_string)) {
+            throw new Error("Invalid Table provided. Must provide a table that exists");
+        }
+    },
+
+    getFieldsForTable: function () {
+        var sdict = new GlideRecord('sys_dictionary');
+        sdict.addQuery('name', this.tableName_string);
+        sdict.addQuery('internal_type', '!=', 'collection').addOrCondition('internal_type', 'NULL');
+        sdict.addQuery('internal_type', '!=', 'GUID').addOrCondition('internal_type', 'NULL');
+        sdict.query();
+        var fields = [];
+        while (sdict.next()) {
+            fields.push(sdict.element.toString());
+        }
+        return fields;
+    },
+
+    getEmptyColumns: function () {
+        var table = this.tableName_string;
+        var emptyColumns = [];
+        var fields = this.getFieldsForTable();
+        fields.forEach(function (field){
+            var rec = new GlideRecord(table);
+            rec.addNotNullQuery(field);
+            rec.setLimit(1);
+            rec.query();
+
+            if (!rec.hasNext()) {
+                emptyColumns.push(field);
+            }
+        });
+        return emptyColumns;
+    },
+
+    type: 'AdminTools_TableInspector'
+};
+]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-04-08 05:56:13</sys_created_on>
+        <sys_id>d3d3248e1b46611043798733cc4bcb0d</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>AdminTools_TableInspector</sys_name>
+        <sys_package display_value="Admin Inspection Tools" source="x_25273_admintools">da93e04e1b46611043798733cc4bcb3a</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Admin Inspection Tools">da93e04e1b46611043798733cc4bcb3a</sys_scope>
+        <sys_update_name>sys_script_include_d3d3248e1b46611043798733cc4bcb0d</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-04-08 07:47:13</sys_updated_on>
+    </sys_script_include>
+</record_update>

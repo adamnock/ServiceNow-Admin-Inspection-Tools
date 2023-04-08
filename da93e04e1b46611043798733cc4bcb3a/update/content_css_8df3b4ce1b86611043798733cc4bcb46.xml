@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="content_css">
+    <content_css action="INSERT_OR_UPDATE">
+        <name>x_25273_admintools_dataTables_css</name>
+        <style/>
+        <sys_class_name>content_css</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-04-08 07:06:28</sys_created_on>
+        <sys_id>8df3b4ce1b86611043798733cc4bcb46</sys_id>
+        <sys_mod_count>1</sys_mod_count>
+        <sys_name>x_25273_admintools_dataTables_css</sys_name>
+        <sys_package display_value="Admin Inspection Tools" source="x_25273_admintools">da93e04e1b46611043798733cc4bcb3a</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Admin Inspection Tools">da93e04e1b46611043798733cc4bcb3a</sys_scope>
+        <sys_update_name>content_css_8df3b4ce1b86611043798733cc4bcb46</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-04-08 08:27:02</sys_updated_on>
+        <type>link</type>
+        <url>//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css</url>
+    </content_css>
+</record_update>

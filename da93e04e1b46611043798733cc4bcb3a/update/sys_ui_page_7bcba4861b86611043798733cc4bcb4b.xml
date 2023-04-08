@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[jQuery("#submit").click(function () {
+
+    // Get data from Script Include AdminTools_TableInspector
+
+    var ajaxCall = new GlideAjax('admintools_ajaxinterfaces');
+    ajaxCall.addParam('sysparm_scope', "x_25273_admintools");
+    ajaxCall.addParam('sysparm_name', 'ajax_getEmptyColumnsForTable');
+    ajaxCall.addParam('sysparm_tablename', jQuery("#tablename").val());
+    ajaxCall.getXMLAnswer(ajaxCallback);
+
+
+});
+
+function ajaxCallback(answerFromServer) {
+
+    try {
+        var results = JSON.parse(answerFromServer);
+        if (!results.error) {
+            //---------------------
+            // Create Table
+
+            jQuery('#results').DataTable({
+                "searching": false,
+                "paging": false,
+                "autoWidth": true,
+                "scrollY": 400,
+                "scrollCollapse": true,
+                "data": results.data,
+                "columns": [{
+                    "title": "Column Name",
+                    "width": "100%"
+                }],
+                "dom": 'Bfrtip',
+                "buttons": [
+                    {
+                        extend: 'excel',
+                        filename: results.filename
+                    },
+                    {
+                        extend: 'pdf',
+                        filename: results.filename
+                    }
+                ]
+            })
+        } else {
+            jQuery("#errorbox").text(ex);
+        }
+        //---------------------
+
+    } catch (ex) {
+        jQuery("#errorbox").text(ex);
+    }
+}]]></client_script>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_25273_admintools_admintools_show_empty_columns_for_table.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+    <link href="8df3b4ce1b86611043798733cc4bcb46.cssdbx?" rel="stylesheet" type="text/css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+
+    <form>
+        <input id="tablename" label="Table Internal Name" mandatory="true"></input>
+        <button id="submit" onclick="return false;">Get empty Columns</button>
+    </form>
+    <table id="results" class="display" style="width:100%"></table>
+
+    <div id="testdiv"></div>
+</j:jelly>]]></html>
+        <name>admintools_show_empty_columns_for_table</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-04-08 06:31:49</sys_created_on>
+        <sys_id>7bcba4861b86611043798733cc4bcb4b</sys_id>
+        <sys_mod_count>47</sys_mod_count>
+        <sys_name>admintools_show_empty_columns_for_table</sys_name>
+        <sys_package display_value="Admin Inspection Tools" source="x_25273_admintools">da93e04e1b46611043798733cc4bcb3a</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Admin Inspection Tools">da93e04e1b46611043798733cc4bcb3a</sys_scope>
+        <sys_update_name>sys_ui_page_7bcba4861b86611043798733cc4bcb4b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-04-08 08:55:11</sys_updated_on>
+    </sys_ui_page>
+</record_update>

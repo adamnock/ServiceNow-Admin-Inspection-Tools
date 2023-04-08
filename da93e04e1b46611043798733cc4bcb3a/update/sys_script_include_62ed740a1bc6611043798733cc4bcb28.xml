@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <active>true</active>
+        <api_name>x_25273_admintools.admintools_ajaxinterfaces</api_name>
+        <caller_access>1</caller_access>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>admintools_ajaxinterfaces</name>
+        <script><![CDATA[var admintools_ajaxinterfaces = Class.create();
+admintools_ajaxinterfaces.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+    ajax_getEmptyColumnsForTable: function () {
+        var tableName = this.getParameter('sysparm_tablename');
+        if (tableName == "")
+            return new Error("Table Name must be provided");
+
+        try {
+            var admintools = new AdminTools_TableInspector(tableName);
+            var results = admintools.getEmptyColumns();
+            var dataForTable = [];
+            results.forEach(function(item){
+                dataForTable.push([item]); // Yes this is weird, but DataTables expects each row in its own array, which makes sense because multiple fields
+            })
+            return JSON.stringify({
+                "error": false,
+                "data": dataForTable,
+                "filename": "ServiceNow Table '" + tableName + "' empty column report"
+            });
+        } catch (ex) {
+            gs.debug(ex);
+            return JSON.stringify({
+                "error": true
+            });
+        }
+    },
+
+    type: 'admintools_ajaxinterfaces'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-04-08 07:49:18</sys_created_on>
+        <sys_id>62ed740a1bc6611043798733cc4bcb28</sys_id>
+        <sys_mod_count>15</sys_mod_count>
+        <sys_name>admintools_ajaxinterfaces</sys_name>
+        <sys_package display_value="Admin Inspection Tools" source="x_25273_admintools">da93e04e1b46611043798733cc4bcb3a</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Admin Inspection Tools">da93e04e1b46611043798733cc4bcb3a</sys_scope>
+        <sys_update_name>sys_script_include_62ed740a1bc6611043798733cc4bcb28</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-04-08 08:58:32</sys_updated_on>
+    </sys_script_include>
+</record_update>
